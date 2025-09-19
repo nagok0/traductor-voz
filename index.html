@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Traductor para Vosotros</title>
+</head>
+<body>
+  <h2>Traductor de Voz 💙</h2>
+
+  <textarea id="texto" placeholder="Escribe algo..."></textarea>
+  <br><br>
+  <button onclick="traducir()">Traducir al Portugués</button>
+  <button onclick="hablar()">Leer en voz alta</button>
+
+  <p id="resultado"></p>
+
+  <script>
+    async function traducir() {
+      const texto = document.getElementById("texto").value;
+      const res = await fetch(`https://api.mymemory.translated.net/get?q=${texto}&langpair=es|pt`);
+      const data = await res.json();
+      document.getElementById("resultado").innerText = data.responseData.translatedText;
+    }
+
+    function hablar() {
+      const texto = document.getElementById("resultado").innerText;
+      const utterance = new SpeechSynthesisUtterance(texto);
+      utterance.lang = "pt-BR";
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+</body>
+</html>
